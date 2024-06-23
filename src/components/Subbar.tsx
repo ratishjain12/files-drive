@@ -1,6 +1,10 @@
 import { FolderOpen, FilePlus, File } from "lucide-react";
 
-const Subbar = () => {
+const Subbar = ({
+  setFolderModal,
+}: {
+  setFolderModal: (b: boolean) => void;
+}) => {
   return (
     <div className="flex items-center justify-between px-3 py-4 flex-wrap">
       <p>Root</p>
@@ -11,7 +15,10 @@ const Subbar = () => {
           </span>
           <span>create file</span>
         </button>
-        <button className="flex items-center gap-2 bg-transparent border-2 border-slate-800 hover:bg-slate-200 px-2 py-1 rounded">
+        <button
+          className="flex items-center gap-2 bg-transparent border-2 border-slate-800 hover:bg-slate-200 px-2 py-1 rounded"
+          onClick={() => setFolderModal(true)}
+        >
           <span>
             <FolderOpen size={15} />
           </span>

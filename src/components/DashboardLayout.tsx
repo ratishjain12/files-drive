@@ -10,7 +10,7 @@ const DashboardLayout = () => {
   const files: string[] = [" new file 1", "new file 2", "new file 3"];
   return (
     <div>
-      <ShowItem title="created folders" items={folders} />
+      <ShowItem title="Created folders" items={folders} />
       <ShowItem title="Files" items={files} />
     </div>
   );

@@ -2,11 +2,10 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { RootState } from "../redux/store/store";
 import { ReactNode } from "react";
-type User = {
-  email?: string;
-};
+import { User } from "../types";
+
 const GuestGuard = ({ children }: { children: ReactNode }) => {
-  const user: User = useSelector(({ AuthSlice }: RootState) => AuthSlice.user);
+  const user: User = useSelector((state: RootState) => state.AuthSlice.user);
   if (user?.email) {
     return <Navigate to="/dashboard" />;
   }

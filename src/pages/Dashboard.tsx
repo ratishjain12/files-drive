@@ -1,17 +1,28 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Subbar from "../components/Subbar";
 import useAuthentication from "../hooks/useAuthentication";
-import { RootState } from "../redux/store/store";
+import { AppDispatch, RootState } from "../redux/store/store";
 import { User } from "../types";
 import { Link } from "react-router-dom";
 import DashboardLayout from "../components/DashboardLayout";
+import { useEffect, useState } from "react";
+import CreateFolderModal from "../components/CreateFolderModal";
+import { fetchUserFolders } from "../redux/slices/fileFoldersSlice";
 
 const Dashboard = () => {
   const { signOutAction } = useAuthentication();
-  const user: User = useSelector(({ AuthSlice }: RootState) => AuthSlice.user);
+  const [folderModal, setFolderModal] = useState(false);
+  const user: User = useSelector((state: RootState) => state.AuthSlice.user);
+  const dispatch = useDispatch<AppDispatch>();
   const handleLogOut = async () => {
     await signOutAction();
   };
+
+  useEffect(() => {
+    if (user.uid) {
+      dispatch(fetchUserFolders(user.uid));
+    }
+  }, [user.uid, dispatch]);
 
   return (
     <>
@@ -34,7 +45,11 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
-      <Subbar />
+      <CreateFolderModal
+        FolderModal={folderModal}
+        setFolderModal={setFolderModal}
+      />
+      <Subbar setFolderModal={setFolderModal} />
       <DashboardLayout />
     </>
   );
